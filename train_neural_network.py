@@ -46,7 +46,7 @@ def train_and_evaluate(
         random_state=42,
         stratify=y,
     )
-  pipeline = Pipeline(
+        pipeline = Pipeline(
         [
             ("scaler", StandardScaler()),
             (
@@ -72,7 +72,7 @@ def train_and_evaluate(
 
     pipeline.fit(X_train, y_train)
     y_pred = pipeline.predict(X_test)
- y_prob = pipeline.predict_proba(X_test)[:, 1]
+    y_prob = pipeline.predict_proba(X_test)[:, 1]
 
     print("\n--- Holdout Test Metrics ---")
     print(f"Accuracy:  {accuracy_score(y_test, y_pred):.4f}")
