@@ -14,8 +14,9 @@ def main():
     run_step("3. Proxy Label Generation", "src/labeler.py") 
     run_step("4. Synthetic Bootstrap Generation", "src/synthesizer.py") 
     run_step("5. Dataset Validation", "src/validator.py") 
-    run_step("6. Model Training and Cross-Validation", "src/train.py") 
-    run_step("7. Standalone Inference Test", "src/predict.py") 
+    run_step("6. Logistic Regression Training and Cross-Validation", "src/train.py")
+    run_step("7. Neural Network Training and Evaluation", "train_neural_network.py")
+    run_step("8. Standalone Inference Test", "src/predict.py") 
     print("\n[SUCCESS] Entire FocusMirror ML Pipeline completed verified end-to-end!") 
 if __name__ == "__main__": 
     main() 
