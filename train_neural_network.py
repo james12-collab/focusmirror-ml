@@ -21,7 +21,7 @@ TARGET_COL = "target_label"
 
 
 def train_and_evaluate(
-  csv_path="data/bootstrapped_sessions.csv",
+    csv_path="data/bootstrapped_sessions.csv",
     model_path="models/neural_network_pipeline.joblib",
 ):
     print("--- FocusMirror Neural Network Trainer & Evaluator ---")
@@ -46,7 +46,7 @@ def train_and_evaluate(
         random_state=42,
         stratify=y,
     )
-        pipeline = Pipeline(
+    pipeline = Pipeline(
         [
             ("scaler", StandardScaler()),
             (
