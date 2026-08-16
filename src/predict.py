@@ -4,8 +4,12 @@ import joblib
 import pandas as pd 
  
 FEATURE_COLS = ["score", "duration_min", "xp_earned"] 
+MODEL_PATH = os.environ.get(
+    "MODEL_PATH",
+    "models/neural_network_pipeline.joblib",
+)
  
-def load_model(model_path="models/logistic_regression_pipeline.joblib"): 
+def load_model(model_path=MODEL_PATH): 
     if not os.path.exists(model_path): 
         print(f"Error: Trained model not found at '{model_path}'. Run src/train.py first.") 
         sys.exit(1) 
@@ -21,7 +25,7 @@ def predict_session(model, session_data: dict):
 def run_test_predictions(): 
     print("--- FocusMirror Standalone Inference Test ---") 
     model = load_model() 
-    print("Successfully loaded model from models/logistic_regression_pipeline.joblib\n") 
+    print(f"Successfully loaded model from {MODEL_PATH}\n") 
     session_1 = {"score": 92, "duration_min": 25, "xp_earned": 60} 
     _, prob_1, label_1 = predict_session(model, session_1) 
     print(f"New Session A: {session_1}") 
