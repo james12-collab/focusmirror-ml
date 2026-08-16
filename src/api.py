@@ -5,7 +5,10 @@ from http.server import HTTPServer, BaseHTTPRequestHandler
 sys.path.append("src")  
 from predict import load_model, predict_session  
   
-MODEL_PATH = "models/logistic_regression_pipeline.joblib"  
+MODEL_PATH = os.environ.get(
+    "MODEL_PATH",
+    "models/neural_network_pipeline.joblib",
+)  
 PORT = int(os.environ.get("PORT", 5001))  
 HOST = "0.0.0.0"  
   
