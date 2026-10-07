@@ -30,8 +30,36 @@ class MLPredictionHandler(BaseHTTPRequestHandler):
                 data = json.loads(self.rfile.read(length).decode("utf-8"))  
                 s_data = {"score": int(data.get("score", 100)), "duration_min": int(data.get("duration_min", 0)), "xp_earned": int(data.get("xp_earned", 0))}  
                 c, p, l = predict_session(self.model, s_data)  
-                ui_msg = f"WARNING: Fatigue / Burnout Risk Detected ({p*100:.1f}%% risk). Consider taking a 15-minute break!" if c == 1 else f"OK: Healthy Focus Mode ({p*100:.1f}%% fatigue risk). Great job!"  
-                resp = {"status": "success", "prediction": int(c), "probability": round(float(p), 4), "label": l, "ui_message": ui_msg}  
+                probability = round(float(p), 4)
+percentage = round(probability * 100, 1)
+
+if probability < 0.34:
+    risk_level = "Low"
+elif probability < 0.67:
+    risk_level = "Moderate"
+else:
+    risk_level = "Elevated"
+
+if c == 1:
+    ui_msg = (
+        f"Estimated fatigue risk: {percentage:.1f}% "
+        f"({risk_level}). Consider taking a short break."
+    )
+else:
+    ui_msg = (
+        f"Estimated fatigue risk: {percentage:.1f}% "
+        f"({risk_level}). Keep up the healthy focus."
+    )
+
+resp = {
+    "status": "success",
+    "prediction": int(c),
+    "probability": probability,
+    "risk_level": risk_level,
+    "model": os.path.basename(MODEL_PATH),
+    "label": l,
+    "ui_message": ui_msg,
+}
                 self._set_cors_headers(200)  
                 self.wfile.write(json.dumps(resp).encode("utf-8"))  
             except Exception as e:  
